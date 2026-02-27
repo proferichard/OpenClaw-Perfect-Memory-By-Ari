@@ -1,5 +1,9 @@
 # OpenClaw-Perfect-Memory-By-Ari 🧠✨
 
+[![CI](https://github.com/proferichard/OpenClaw-Perfect-Memory-By-Ari/actions/workflows/ci.yml/badge.svg)](https://github.com/proferichard/OpenClaw-Perfect-Memory-By-Ari/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Node](https://img.shields.io/badge/node-%3E%3D22-blue)](https://nodejs.org)
+
 A practical **hybrid memory stack** for OpenClaw-style agents:
 
 - Local-first persistence (SQLite + FTS5)
@@ -52,11 +56,29 @@ This project prioritizes:
 ## Quick start
 
 ```bash
+git clone https://github.com/proferichard/OpenClaw-Perfect-Memory-By-Ari.git
+cd OpenClaw-Perfect-Memory-By-Ari
 npm install
 node src/cli.js store --content "User prefers concise updates" --kind preference --importance 8
 node src/cli.js search prefers
 node src/server.js
 ```
+
+## Community setup (recommended)
+
+1. Start API service:
+```bash
+./scripts/ari_memory_start.sh
+```
+2. Ingest baseline notes:
+```bash
+./scripts/ari_memory_ingest.sh
+```
+3. Add automation via your scheduler (cron/OpenClaw cron) for:
+- `ari_memory_ingest.sh`
+- `ari_memory_consolidate.sh`
+- `ari_memory_contradictions.sh`
+- `ari_memory_pending_report.sh`
 
 ### Service scripts
 
