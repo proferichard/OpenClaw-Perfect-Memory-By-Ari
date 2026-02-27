@@ -1,10 +1,31 @@
 #!/usr/bin/env node
+import fs from 'node:fs';
+import path from 'node:path';
 import { DatabaseSync } from 'node:sqlite';
 
-const dbPath = process.env.ARI_MEMORY_DB || '/home/ubuntu/.openclaw/workspace/memory/ari-memory.db';
-const db = new DatabaseSync(dbPath);
+const dbPath = process.env.ARI_MEMORY_DB || path.resolve(process.cwd(), 'memory/ari-memory.db');
+
+function getDb() {
+  fs.mkdirSync(path.dirname(dbPath), { recursive: true });
+  const db = new DatabaseSync(dbPath);
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS memories (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      created_at TEXT,
+      updated_at TEXT,
+      scope TEXT,
+      kind TEXT,
+      content TEXT,
+      tags TEXT,
+      expires_at TEXT,
+      status TEXT DEFAULT 'active'
+    );
+  `);
+  return db;
+}
 
 function dailySummary() {
+  const db = getDb();
   const rows = db.prepare(`
     SELECT id, created_at, kind, content
     FROM memories
@@ -55,6 +76,7 @@ function looksEquivalent(a, b) {
 }
 
 function contradictions() {
+  const db = getDb();
   const rows = db.prepare(`
     SELECT id, created_at, content, kind
     FROM memories
