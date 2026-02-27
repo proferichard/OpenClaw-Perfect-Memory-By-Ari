@@ -1,0 +1,21 @@
+{
+  "name": "openclaw-perfect-memory-by-ari",
+  "version": "0.1.0",
+  "private": false,
+  "type": "module",
+  "description": "Hybrid memory system for AI agents (SQLite + FTS + governance)",
+  "scripts": {
+    "start": "node src/server.js",
+    "cli": "node src/cli.js",
+    "analyze": "node src/analyze.js"
+  },
+  "keywords": [
+    "openclaw",
+    "ai-agent",
+    "memory",
+    "sqlite",
+    "fts5",
+    "retrieval"
+  ],
+  "license": "MIT"
+}
